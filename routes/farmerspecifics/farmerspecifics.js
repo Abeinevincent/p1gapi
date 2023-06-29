@@ -1,18 +1,36 @@
 const router = require("express").Router();
 const { verifyToken, verifyTokenAndFarmer } = require("../../helpers/token");
+const Farmer = require("../../models/Farmer");
 const FarmerSpecifics = require("../../models/FarmerSpecifics");
 
 // Create farmerspecifics
 router.post("/", verifyToken, async (req, res) => {
   try {
-    const farmer = await FarmerSpecifics.findOne({
-      farmername: req.body.farmername,
-      itemname: req.body.itemname,
+    const {
+      farmerId,
+      itemname,
+      itemquantity,
+      itemprice,
+      itemunit,
+      itemstatus,
+    } = req.body;
+    const farmer = await Farmer.findOne({
+      _id: farmerId,
     });
-    if (farmer) {
-      return res.status(400).json("Farmer already uploaded this produce");
+    if (!farmer) {
+      return res.status(400).json("Farmer with provided id doesnot exist!");
     } else {
-      const newFarmerSpecifics = new FarmerSpecifics(req.body);
+      const newFarmerSpecifics = new FarmerSpecifics({
+        farmerId,
+        farmername: farmer.fullName,
+        farmerdistrict: farmer.location.district,
+        farmerprofileimage: farmer.meta.displayImage,
+        itemname,
+        itemquantity,
+        itemprice,
+        itemunit,
+        itemstatus,
+      });
       const savedfarmer = await newFarmerSpecifics.save();
       return res.status(200).json(savedfarmer);
     }
