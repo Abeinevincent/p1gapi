@@ -26,6 +26,14 @@ const InserminateSchema = new Schema(
       type: String,
       required: true,
     },
+    farmerdistrict: {
+      type: String,
+      required: true,
+    },
+    distancefromtarmac: {
+      type: String,
+      required: true,
+    },
     status: {
       type: String,
       default: "pending",

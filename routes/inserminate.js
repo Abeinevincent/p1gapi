@@ -12,6 +12,8 @@ router.post("/", async (req, res) => {
       typeOfBreed,
       farmername,
       farmerContact,
+      distancefromtarmac,
+      farmerdistrict,
     });
     const savedInserm = await newInserm.save();
     return res.status(201).json(savedInserm);
