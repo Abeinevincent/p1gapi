@@ -4,7 +4,7 @@ const router = require("express").Router();
 
 router.post("/", async (req, res) => {
   try {
-    const { totalPigs, pigsOnHeat, typeOfBreed, farmername, farmerContact } =
+    const { totalPigs, pigsOnHeat, typeOfBreed, farmername, farmerContact, distancefromtarmac, farmerdistrict } =
       req.body;
     const newInserm = new Inserminate({
       totalPigs,
